@@ -1,0 +1,38 @@
+{
+    "name": "juve534/dd-for-php",
+    "description": "Datadog  api library for php is unofficial",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "juve534",
+            "email": "maxim_4141.rock@zoho.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Juve534\\Datadog\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpunit/phpunit": "^8.1"
+    },
+    "scripts": {
+        "cs-check": [
+            "@php ./vendor/bin/php-cs-fixer fix --dry-run --diff --ansi"
+        ],
+        "cs-fix": [
+            "@php ./vendor/bin/php-cs-fixer fix"
+        ]
+    }
+}
