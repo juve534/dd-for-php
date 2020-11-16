@@ -16,12 +16,18 @@ class Client implements ClientInterface
     private string $apiToken;
 
     /**
+     * Datadog App Key.
+     */
+    private string $appKey;
+
+    /**
      * Client constructor.
      */
-    public function __construct(HttpClientInterface $httpClient, string $apiToken)
+    public function __construct(HttpClientInterface $httpClient, string $apiToken, string $appKey)
     {
         $this->httpClient = $httpClient;
         $this->apiToken = $apiToken;
+        $this->appKey = $appKey;
     }
 
     /**
@@ -29,19 +35,35 @@ class Client implements ClientInterface
      */
     public function post(string $path, array $data = []): array
     {
-        return $this->request('POST', $path, [
+        $options = [
+            'query' => [
+                'api_key' => $this->apiToken,
+            ],
             'json' => $data,
-        ]);
+        ];
+
+        return $this->request('POST', $path, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get(string $path, array $data = []): array
+    {
+        $headers = [
+            'headers' => [
+                'Content-Type'       => 'application/json',
+                'DD-API-KEY'         => $this->apiToken,
+                'DD-APPLICATION-KEY' => $this->appKey,
+            ],
+        ];
+        $options = array_merge($headers, $data);
+
+        return json_decode($this->httpClient->request('GET', $path, $options)->getBody()->getContents(), true);
     }
 
     private function request(string $method, string $path, array $options = []): array
     {
-        $query = [
-            'query' => [
-                'api_key' => $this->apiToken,
-            ],
-        ];
-
-        return json_decode($this->httpClient->request($method, $path, array_merge($query, $options))->getBody()->getContents(), true);
+        return json_decode($this->httpClient->request($method, $path, $options)->getBody()->getContents(), true);
     }
 }

@@ -21,10 +21,10 @@ final class ClientFactory
         ],
     ];
 
-    public static function create(string $apiToken, array $httpOptions = []): ClientInterface
+    public static function create(string $apiToken, string $appKey, array $httpOptions = []): ClientInterface
     {
         $httpOptions = array_merge(self::$httpOptions, $httpOptions);
 
-        return new Client(new \GuzzleHttp\Client($httpOptions), $apiToken);
+        return new Client(new \GuzzleHttp\Client($httpOptions), $apiToken, $appKey);
     }
 }

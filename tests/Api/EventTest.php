@@ -54,4 +54,57 @@ class EventTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @param $path
+     * @param $eventId
+     * @param $expected
+     *
+     * @dataProvider getEventDataProvider
+     */
+    public function testGetEvent($path, $eventId, $expected)
+    {
+        $mock = Mockery::mock(ClientInterface::class);
+        $mock->shouldReceive('get')
+            ->once()
+            ->with($path)
+            ->andReturn($expected);
+
+        $event = new Event($mock);
+        $actual = $event->getEvent($eventId);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function getEventDataProvider()
+    {
+        $eventId = 1;
+        $path = sprintf('%s/%d', Event::END_POINT, $eventId);
+        $response = [
+            'event' => [
+                'date_happened' => 1,
+                'alert_type'    => 'info',
+                'resource'      => '/api/v1/events/1',
+                'title'         => 'Datadog agent (v. 7.23.1) started on hoge',
+                'url'           => '/event/event?id=1',
+                'text'          => 'hoge',
+                'tags'          => [
+                    'environment' => 'test',
+                ],
+                'id'            => 1,
+                'priority'      => 'normal',
+                'host'          => 'hoge',
+                'device_name'   => null,
+                'payload'       => '"{"hosts": ["hoge"]}',
+            ],
+        ];
+
+        return [
+            'success event' => [
+                'path'     => $path,
+                'eventId'  => $eventId,
+                'response' => $response,
+            ],
+        ];
+    }
 }

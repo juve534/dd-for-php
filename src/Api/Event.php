@@ -10,7 +10,6 @@ class Event
 {
     const END_POINT = 'api/v1/events';
 
-
     private ClientInterface $client;
 
     /**
@@ -21,6 +20,11 @@ class Event
         $this->client = $client;
     }
 
+    /**
+     * @param string $text    Event text
+     * @param string $title   Event title
+     * @param array  $options optional params
+     */
     public function putEvent(string $text, string $title, array $options = []): void
     {
         $this->client->post(self::END_POINT, [
@@ -28,5 +32,17 @@ class Event
             'title' => $title,
             $options,
         ]);
+    }
+
+    /**
+     * @param int $eventId event Id
+     *
+     * @return array api response
+     */
+    public function getEvent(int $eventId): array
+    {
+        $path = sprintf('%s/%d', self::END_POINT, $eventId);
+
+        return $this->client->get($path);
     }
 }
