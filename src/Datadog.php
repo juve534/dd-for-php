@@ -22,8 +22,14 @@ class Datadog
         return new Event($this->client);
     }
 
-    public static function create(string $token, array $httpOptions = []): self
+    /**
+     * @param string $token  Datadog Api Token
+     * @param string $appKey Datadog Application Key
+     *
+     * @return static
+     */
+    public static function create(string $token, string $appKey, array $httpOptions = []): self
     {
-        return new self(ClientFactory::create($token, $httpOptions));
+        return new self(ClientFactory::create($token, $appKey, $httpOptions));
     }
 }

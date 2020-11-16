@@ -21,6 +21,11 @@ class Event
         $this->client = $client;
     }
 
+    /**
+     * @param string $text    Event text
+     * @param string $title   Event title
+     * @param array  $options optional params
+     */
     public function putEvent(string $text, string $title, array $options = []): void
     {
         $this->client->post(self::END_POINT, [
