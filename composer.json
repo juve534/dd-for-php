@@ -25,7 +25,8 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
-        "phpunit/phpunit": "^8.1"
+        "phpunit/phpunit": "^8.1",
+        "mockery/mockery": "^1.4"
     },
     "scripts": {
         "cs-check": [

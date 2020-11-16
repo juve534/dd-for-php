@@ -1,6 +1,8 @@
 container=dd-for-php
 
 init:
+	docker-compose build
+	docker-compose up -d
 	docker-compose exec $(container) composer install
 
 up:
