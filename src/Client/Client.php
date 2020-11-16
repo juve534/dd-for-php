@@ -45,6 +45,23 @@ class Client implements ClientInterface
         return $this->request('POST', $path, $options);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function get(string $path, array $data = []): array
+    {
+        $headers = [
+            'headers' => [
+                'Content-Type'       => 'application/json',
+                'DD-API-KEY'         => $this->apiToken,
+                'DD-APPLICATION-KEY' => $this->appKey,
+            ],
+        ];
+        $options = array_merge($headers, $data);
+
+        return json_decode($this->httpClient->request('GET', $path, $options)->getBody()->getContents(), true);
+    }
+
     private function request(string $method, string $path, array $options = []): array
     {
         return json_decode($this->httpClient->request($method, $path, $options)->getBody()->getContents(), true);

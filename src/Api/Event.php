@@ -10,7 +10,6 @@ class Event
 {
     const END_POINT = 'api/v1/events';
 
-
     private ClientInterface $client;
 
     /**
@@ -33,5 +32,17 @@ class Event
             'title' => $title,
             $options,
         ]);
+    }
+
+    /**
+     * @param int $eventId event Id
+     *
+     * @return array api response
+     */
+    public function getEvent(int $eventId): array
+    {
+        $path = sprintf('%s/%d', self::END_POINT, $eventId);
+
+        return $this->client->get($path);
     }
 }
