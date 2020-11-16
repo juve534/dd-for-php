@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: nanasess/setup-php@master
+        with:
+          php-version: '7.4'
+      - name: Run a one-line script
+        run: echo Hello, world!
+      - name: Composer install
+        run: |
+          composer install
+      - name: Run Test
+        run: php vendor/bin/phpunit tests
