@@ -11,20 +11,47 @@ use PHPUnit\Framework\TestCase;
 
 class EventTest extends TestCase
 {
-    public function testPutEvent()
+    /**
+     * @param $text
+     * @param $title
+     * @param $options
+     *
+     * @dataProvider putEventDataProvider
+     */
+    public function testPutEvent($text, $title, $options)
     {
         $mock = Mockery::mock(ClientInterface::class);
         $mock->shouldReceive('post')
             ->once()
             ->with(Event::END_POINT, [
-                'text'  => 'hoge',
-                'title' => 'hoge',
+                'text'  => $text,
+                'title' => $title,
+                $options,
             ])
             ->andReturn([]);
 
         $event = new Event($mock);
-        $event->putEvent('hoge', 'hoge');
+        $event->putEvent($text, $title, $options);
 
         $this->assertTrue(true);
+    }
+
+    public function putEventDataProvider()
+    {
+        $title = 'hoge';
+        $text = 'hoge';
+        $options = [
+            'tags' => [
+                'environment' => 'test',
+            ],
+        ];
+
+        return [
+            'success event' => [
+                'text'    => $text,
+                'title'   => $title,
+                'options' => $options,
+            ],
+        ];
     }
 }

@@ -21,12 +21,12 @@ class Event
         $this->client = $client;
     }
 
-
     public function putEvent(string $text, string $title, array $options = []): void
     {
         $this->client->post(self::END_POINT, [
             'text'  => $text,
             'title' => $title,
+            $options,
         ]);
     }
 }
