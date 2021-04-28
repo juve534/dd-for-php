@@ -10,11 +10,9 @@ use Juve534\Datadog\Client\ClientInterface;
 
 class Datadog
 {
-    private ClientInterface $client;
-
-    public function __construct(ClientInterface $client)
-    {
-        $this->client = $client;
+    public function __construct(
+        private ClientInterface $client
+    ) {
     }
 
     public function event(): Event

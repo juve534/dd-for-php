@@ -8,26 +8,14 @@ use GuzzleHttp\ClientInterface as HttpClientInterface;
 
 class Client implements ClientInterface
 {
-    private HttpClientInterface $httpClient;
-
-    /**
-     * Datadog Api Token.
-     */
-    private string $apiToken;
-
-    /**
-     * Datadog App Key.
-     */
-    private string $appKey;
-
     /**
      * Client constructor.
      */
-    public function __construct(HttpClientInterface $httpClient, string $apiToken, string $appKey)
-    {
-        $this->httpClient = $httpClient;
-        $this->apiToken = $apiToken;
-        $this->appKey = $appKey;
+    public function __construct(
+        private HttpClientInterface $httpClient,
+        private string $apiToken,
+        private string $appKey
+    ) {
     }
 
     /**
