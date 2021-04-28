@@ -10,14 +10,12 @@ class Event
 {
     const END_POINT = 'api/v1/events';
 
-    private ClientInterface $client;
-
     /**
      * Event constructor.
      */
-    public function __construct(ClientInterface $client)
-    {
-        $this->client = $client;
+    public function __construct(
+        private ClientInterface $client
+    ) {
     }
 
     /**
